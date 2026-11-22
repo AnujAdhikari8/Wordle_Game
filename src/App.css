@@ -1,0 +1,467 @@
+
+/* Main application layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* WORDLE heading */
+.app h1 {
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 5px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #d3d6da;
+  width: 100%;
+}
+
+/* Game instructions */
+.game-instructions {
+  font-size: 15px;
+  color: #666666;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* How to Play button */
+.how-to-play-button {
+  margin-bottom: 20px;
+  padding: 9px 18px;
+  background-color: #ffffff;
+  color: #538d4e;
+  border: 2px solid #538d4e;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.how-to-play-button:hover {
+  background-color: #538d4e;
+  color: white;
+}
+
+/* Game board */
+.game-board {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Game rows */
+.game-row {
+  display: flex;
+  gap: 6px;
+}
+
+/* Individual tiles */
+.tile {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #d3d6da;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Correct letter and correct position */
+.tile.correct {
+  background-color: #538d4e;
+  border-color: #538d4e;
+  color: white;
+}
+
+/* Correct letter but wrong position */
+.tile.present {
+  background-color: #b59f3b;
+  border-color: #b59f3b;
+  color: white;
+}
+
+/* Letter not found in the solution */
+.tile.absent {
+  background-color: #787c7e;
+  border-color: #787c7e;
+  color: white;
+}
+
+/* Animation when a letter is entered */
+.tile:not(:empty) {
+  animation: tilePop 0.15s ease-in-out;
+}
+
+@keyframes tilePop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Virtual keyboard */
+.keyboard {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Keyboard rows */
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+}
+
+/* Keyboard keys */
+.key {
+  min-width: 35px;
+  height: 55px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #d3d6da;
+  color: #212121;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.1s ease;
+}
+
+/* Enter and Backspace keys */
+.key:first-child,
+.key:last-child {
+  font-size: 11px;
+  padding: 0 10px;
+}
+
+/* Keyboard hover effect */
+.key:hover {
+  filter: brightness(0.9);
+}
+
+/* Keyboard click effect */
+.key:active {
+  transform: scale(0.95);
+}
+
+/* Keyboard feedback colors */
+.key.correct {
+  background-color: #538d4e;
+  color: white;
+}
+
+.key.present {
+  background-color: #b59f3b;
+  color: white;
+}
+
+.key.absent {
+  background-color: #787c7e;
+  color: white;
+}
+
+/* Restart button */
+.restart-button {
+  margin-top: 25px;
+  padding: 12px 25px;
+  background-color: #538d4e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.restart-button:hover {
+  background-color: #416f3d;
+  transform: translateY(-2px);
+}
+
+/* Result messages */
+.app h2 {
+  margin-top: 25px;
+  font-size: 22px;
+  text-align: center;
+  animation: messageAppear 0.4s ease;
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Instructions popup background */
+.instructions-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 15px;
+}
+
+/* Instructions popup box */
+.instructions-box {
+  position: relative;
+  background-color: white;
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.instructions-box h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #212121;
+}
+
+.instructions-box h3 {
+  margin-top: 25px;
+}
+
+.instructions-box p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Color examples */
+.color-example {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.color-example p {
+  margin: 0;
+}
+
+.example-tile {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+  border-radius: 4px;
+}
+
+.example-tile.correct {
+  background-color: #538d4e;
+}
+
+.example-tile.present {
+  background-color: #b59f3b;
+}
+
+.example-tile.absent {
+  background-color: #787c7e;
+}
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #555;
+}
+
+/* Got it button */
+.close-instructions {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #538d4e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-instructions:hover {
+  background-color: #416f3d;
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 600px) {
+  .app {
+    padding: 15px 8px;
+  }
+
+  .app h1 {
+    font-size: 27px;
+    margin-bottom: 20px;
+  }
+
+  .game-board {
+    gap: 5px;
+  }
+
+  .game-row {
+    gap: 5px;
+  }
+
+  .tile {
+    width: 52px;
+    height: 52px;
+    font-size: 25px;
+  }
+
+  .keyboard {
+    margin-top: 30px;
+    gap: 7px;
+    max-width: 100%;
+  }
+
+  .keyboard-row {
+    gap: 4px;
+  }
+
+  .key {
+    min-width: 0;
+    height: 48px;
+    padding: 0 3px;
+    font-size: 12px;
+    flex: 1;
+  }
+
+  .key:first-child,
+  .key:last-child {
+    font-size: 9px;
+  }
+
+  .app h2 {
+    font-size: 19px;
+    text-align: center;
+  }
+
+  .restart-button {
+    font-size: 13px;
+  }
+
+  .instructions-box {
+    padding: 25px 20px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .tile {
+    width: 45px;
+    height: 45px;
+    font-size: 22px;
+  }
+
+  .key {
+    height: 43px;
+    font-size: 10px;
+  }
+}
+
+/* Game result popup background */
+.result-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  padding: 15px;
+}
+
+/* Game result popup box */
+.result-box {
+  background-color: white;
+  width: 100%;
+  max-width: 400px;
+  padding: 35px 25px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: messageAppear 0.4s ease;
+}
+
+.result-box h2 {
+  margin-top: 0;
+  font-size: 26px;
+  color: #538d4e;
+}
+
+.result-box p {
+  font-size: 15px;
+  color: #555555;
+  line-height: 1.5;
+}
+
+/* Correct answer display */
+.result-word {
+  margin: 20px auto;
+  padding: 12px;
+  width: fit-content;
+  min-width: 150px;
+  background-color: #538d4e;
+  color: white;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+
+/* Result popup button */
+.result-box .restart-button {
+  margin-top: 15px;
+  width: 100%;
+}
